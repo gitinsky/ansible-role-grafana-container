@@ -17,6 +17,6 @@
               -v {{ ext_grafana_data_volume }}:/usr/share/grafana/data
               -v {{ ext_grafana_tmp_volume }}:/var/tmp
               -p {{ grafana_port }}:3000
-              --name=grafana gitinsky/grafana:0.1.0
+              --name=grafana gitinsky/grafana:0.1.1
   register: docker_id
   when: result|failed
