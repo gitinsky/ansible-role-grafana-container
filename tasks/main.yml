@@ -2,22 +2,19 @@
 - name: create ext volume for data
   file: state=directory path={{ ext_grafana_data_volume }}
 
-- name: check if a grafana container is started
-  command: bash -c "docker ps | grep grafana"
-  changed_when: result.rc != 0
-  failed_when: no
-  register: result
-
 - name: start a grafana container
-  command: docker run -d
-              -h {{ ansible_hostname }}-grafana
-              --dns {{ ansible_docker0.ipv4.address }}
-              --dns 8.8.8.8
-              --read-only=true
-              --restart=always
-              -v {{ ext_grafana_data_volume }}:/usr/share/grafana/data
-              -v {{ ext_grafana_tmp_volume }}:/var/tmp
-              -p {{ grafana_port }}:3000
-              --name=grafana gitinsky/grafana:0.1.4
-  register: docker_id
-  when: result.changed
+  docker:
+    image: gitinsky/grafana:latest
+    state: reloaded
+    hostname: "{{ ansible_hostname }}-grafana"
+    dns:
+      - "{{ ansible_docker0.ipv4.address }}"
+      - 8.8.8.8
+    ports:
+        - "{{ grafana_listen_address + ':' if grafana_listen_address is defined else '' }}3000:3000"
+    volumes:
+      - "{{ ext_grafana_data_volume }}:/usr/share/grafana/data"
+      - "{{ ext_grafana_tmp_volume }}:/var/tmp"
+    name: grafana
+    restart_policy: always
+  ignore_errors: yes
