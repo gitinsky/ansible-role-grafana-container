@@ -4,7 +4,7 @@
 
 - name: start a grafana container
   docker:
-    image: gitinsky/grafana:0.1.5
+    image: gitinsky/grafana:0.1.6
     state: started
     read_only: yes
     hostname: "{{ ansible_hostname }}-grafana"
