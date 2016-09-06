@@ -4,12 +4,10 @@
 
 - name: start a grafana container
   docker:
-    image: gitinsky/grafana:0.1.7
+    image: gitinsky/grafana:0.1.8
     state: started
     read_only: yes
     hostname: "{{ ansible_hostname }}-grafana"
-    dns:
-      - 8.8.8.8
     ports:
       - "{{ grafana_port }}:3000"
     volumes:
