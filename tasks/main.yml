@@ -2,9 +2,15 @@
 - name: create ext volume for data
   file: state=directory path={{ ext_grafana_data_volume }}
 
+- name: create ext volume for conf
+  file: state=directory path={{ ext_grafana_conf_volume }}
+
+- name: put grafana.ini
+  template: src=grafana.ini dest={{ ext_grafana_conf_volume }}/grafana.ini
+
 - name: start a grafana container
   docker:
-    image: gitinsky/grafana:0.1.8
+    image: gitinsky/grafana:0.1.9
     state: started
     read_only: yes
     hostname: "{{ ansible_hostname }}-grafana"
@@ -12,6 +18,7 @@
       - "{{ grafana_port }}:3000"
     volumes:
       - "{{ ext_grafana_data_volume }}:/usr/share/grafana/data"
+      - "{{ ext_grafana_conf_volume }}/grafana.ini:/etc/grafana/grafana.ini"
       - "{{ ext_grafana_tmp_volume }}:/var/tmp"
     name: grafana
     restart_policy: always
