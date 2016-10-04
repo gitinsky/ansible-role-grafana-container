@@ -13,14 +13,14 @@
     image: gitinsky/grafana:0.1.9
     state: started
     read_only: yes
-    hostname: "{{ ansible_hostname }}-grafana"
+    hostname: "{{ ansible_hostname }}-{{ grafana_container_name }}"
     ports:
       - "{{ grafana_port }}:3000"
     volumes:
       - "{{ ext_grafana_data_volume }}:/usr/share/grafana/data"
       - "{{ ext_grafana_conf_volume }}/grafana.ini:/etc/grafana/grafana.ini"
       - "{{ ext_grafana_tmp_volume }}:/var/tmp"
-    name: grafana
+    name: "{{ grafana_container_name }}"
     restart_policy: always
     restart_policy_retry: 10000000
   tags:

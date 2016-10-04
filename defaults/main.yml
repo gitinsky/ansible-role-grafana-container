@@ -4,3 +4,4 @@ ext_grafana_conf_volume: /var/lib/docker-extvols/grafana/conf
 grafana_port: 3000
 grafana_anon_access_enabled: "false"
 grafana_auth_basic_enabled: "true"
+grafana_container_name: grafana
