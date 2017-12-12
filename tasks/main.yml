@@ -9,8 +9,8 @@
   template: src=grafana.ini dest={{ ext_grafana_conf_volume }}/grafana.ini
 
 - name: start a grafana container
-  docker:
-    image: gitinsky/grafana:0.1.9
+  docker_container:
+    image: gitinsky/grafana:0.2.1
     state: started
     read_only: yes
     hostname: "{{ ansible_hostname }}-{{ grafana_container_name }}"
@@ -22,6 +22,5 @@
       - "{{ ext_grafana_tmp_volume }}:/var/tmp"
     name: "{{ grafana_container_name }}"
     restart_policy: always
-    restart_policy_retry: 10000000
   tags:
     - docker
