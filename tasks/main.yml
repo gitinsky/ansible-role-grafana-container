@@ -1,6 +1,6 @@
 ---
 - name: create ext volume for data
-  file: state=directory path={{ ext_grafana_data_volume }}
+  file: state=directory path={{ ext_grafana_data_volume }} owner=472 group=472
 
 - name: create ext volume for conf
   file: state=directory path={{ ext_grafana_conf_volume }}
@@ -10,14 +10,16 @@
 
 - name: start a grafana container
   docker_container:
-    image: gitinsky/grafana:0.3.0
+    image: grafana/grafana
     state: started
     read_only: yes
+    recreate: yes
+    restart_policy: always
     hostname: "{{ ansible_hostname }}-{{ grafana_container_name }}"
     ports:
       - "{{ grafana_port }}:3000"
     volumes:
-      - "{{ ext_grafana_data_volume }}:/usr/share/grafana/data"
+      - "{{ ext_grafana_data_volume }}:/var/lib/grafana"
       - "{{ ext_grafana_conf_volume }}/grafana.ini:/etc/grafana/grafana.ini"
       - "{{ ext_grafana_tmp_volume }}:/var/tmp"
     name: "{{ grafana_container_name }}"
