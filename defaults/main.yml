@@ -1,7 +1,12 @@
 ext_grafana_data_volume: /var/lib/docker-extvols/grafana/data
 ext_grafana_tmp_volume:  /var/lib/docker-extvols/grafana/tmp
 ext_grafana_conf_volume: /var/lib/docker-extvols/grafana/conf
+ext_grafana_provisioning_volume: /var/lib/docker-extvols/grafana/provisioning
 grafana_port: 3000
 grafana_anon_access_enabled: "false"
 grafana_auth_basic_enabled: "true"
 grafana_container_name: grafana
+grafana_admin_user: admin
+grafana_admin_password: admin
+grafana_enable_internal_metrics: False
+grafana_prometheus_port: 9090
