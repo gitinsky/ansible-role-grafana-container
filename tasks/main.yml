@@ -8,6 +8,16 @@
 - name: put grafana.ini
   template: src=grafana.ini dest={{ ext_grafana_conf_volume }}/grafana.ini
 
+- name: create provisioning folder
+  file: state=directory path={{ ext_grafana_provisioning_volume }}
+
+- name: create provisioning/datasources folder
+  file: state=directory path={{ ext_grafana_provisioning_volume }}/datasources
+
+- name: put datasource.yml
+  template: src=datasource.yml dest={{ ext_grafana_provisioning_volume }}/datasources/datasource.yml
+  when: grafana_auto_prometheus_config
+
 - name: start a grafana container
   docker_container:
     image: grafana/grafana
@@ -21,6 +31,7 @@
     volumes:
       - "{{ ext_grafana_data_volume }}:/var/lib/grafana"
       - "{{ ext_grafana_conf_volume }}/grafana.ini:/etc/grafana/grafana.ini"
+      - "{{ ext_grafana_provisioning_volume }}:/etc/grafana/provisioning"
       - "{{ ext_grafana_tmp_volume }}:/var/tmp"
     name: "{{ grafana_container_name }}"
     restart_policy: always

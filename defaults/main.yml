@@ -9,4 +9,5 @@ grafana_container_name: grafana
 grafana_admin_user: admin
 grafana_admin_password: admin
 grafana_enable_internal_metrics: False
+grafana_auto_prometheus_config: False
 grafana_prometheus_port: 9090
