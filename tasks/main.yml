@@ -34,15 +34,17 @@
   when: grafana_auto_dashboards_config
 
 - name: put dashboards
-  template: src=dashboard.jsonnet dest=/root/dashboards/dashboard.jsonnet
+  template: src=dashboard.jsonnet dest=/root/dashboards/{{ item.file_name }}.jsonnet
   when: grafana_auto_dashboards_config
+  with_items: "{{ grafana_dashboards }}"
 
 - name: create dashboards folder
   file: state=directory path={{ ext_grafana_dashboards_volume }}
 
 - name: generate the dashboard
-  shell: cd /root/dashboards && docker run --rm -i -v `pwd`:/src mexisme/jsonnet /jsonnet -J /src/grafonnet-lib /src/dashboard.jsonnet > {{ ext_grafana_dashboards_volume }}/dashboard.json
+  shell: cd /root/dashboards && docker run --rm -i -v `pwd`:/src mexisme/jsonnet /jsonnet -J /src/grafonnet-lib /src/{{ item.file_name }}.jsonnet > {{ ext_grafana_dashboards_volume }}/{{ item.file_name }}.json
   when: grafana_auto_dashboards_config
+  with_items: "{{ grafana_dashboards }}"
 
 - name: start a grafana container
   docker_container:
