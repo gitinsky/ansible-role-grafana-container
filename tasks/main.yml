@@ -18,6 +18,32 @@
   template: src=datasource.yml dest={{ ext_grafana_provisioning_volume }}/datasources/datasource.yml
   when: grafana_auto_prometheus_config
 
+- name: create provisioning/dashboards folder
+  file: state=directory path={{ ext_grafana_provisioning_volume }}/dashboards
+
+- name: put provider.yml
+  template: src=provider.yml dest={{ ext_grafana_provisioning_volume }}/dashboards/provider.yml
+  when: grafana_auto_dashboards_config
+
+- name: create /root/dashboards
+  file: state=directory path=/root/dashboards
+  when: grafana_auto_dashboards_config
+
+- name: checkout grafonnet
+  git: repo=https://github.com/grafana/grafonnet-lib.git dest=/root/dashboards/grafonnet-lib
+  when: grafana_auto_dashboards_config
+
+- name: put dashboards
+  template: src=dashboard.jsonnet dest=/root/dashboards/dashboard.jsonnet
+  when: grafana_auto_dashboards_config
+
+- name: create dashboards folder
+  file: state=directory path={{ ext_grafana_dashboards_volume }}
+
+- name: generate the dashboard
+  shell: cd /root/dashboards && docker run --rm -i -v `pwd`:/src mexisme/jsonnet /jsonnet -J /src/grafonnet-lib /src/dashboard.jsonnet > {{ ext_grafana_dashboards_volume }}/dashboard.json
+  when: grafana_auto_dashboards_config
+
 - name: start a grafana container
   docker_container:
     image: grafana/grafana
@@ -32,6 +58,7 @@
       - "{{ ext_grafana_data_volume }}:/var/lib/grafana"
       - "{{ ext_grafana_conf_volume }}/grafana.ini:/etc/grafana/grafana.ini"
       - "{{ ext_grafana_provisioning_volume }}:/etc/grafana/provisioning"
+      - "{{ ext_grafana_dashboards_volume }}:/var/lib/grafana/dashboards"
       - "{{ ext_grafana_tmp_volume }}:/var/tmp"
     name: "{{ grafana_container_name }}"
     restart_policy: always
