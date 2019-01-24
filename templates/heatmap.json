@@ -17,7 +17,7 @@
         "cardRound": null
       },
       "color": {
-        "cardColor": "#d683ce",
+        "cardColor": "{{ panel.card_color }}",
         "colorScale": "sqrt",
         "colorScheme": "interpolateSpectral",
         "exponent": 0.3,
