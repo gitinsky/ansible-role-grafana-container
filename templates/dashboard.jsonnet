@@ -9,25 +9,28 @@ local template = grafana.template;
 dashboard.new(
   '{{ item.dashboard_name }}',
   schemaVersion=16,
-  tags=['nginx'],
+  tags=['{{ item.tag }}'],
   time_from='now-3h',
   refresh='30s',
 )
+{% for template in item.templates %}
 .addTemplate(
   template.new(
-    'instance',
+    '{{ template.name }}',
     'default',
-    'label_values(nginx_http_requests_total, instance)',
-    label='Instance',
+    '{{ template.query }}',
+    label='{{ template.label }}',
     refresh='time',
+    includeAll={{ template.includeAll }},
   )
 )
+{% endfor %}
 {% for panel in item.panels %}
 .addPanel(
   graphPanel.new(
     '{{ panel.name }}',
     span=6,
-    format='short',
+    format='{{ panel.format }}',
     fill={{ panel.fill }},
     min=0,
     stack={{ panel.stack }},
