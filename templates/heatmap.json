@@ -80,7 +80,30 @@
   "tags": [
   ],
   "templating": {
-    "list": []
+    "list": [
+{% for template in item.templates %}
+      {
+        "allValue": null,
+        "current": { },
+        "datasource": "default",
+        "hide": 0,
+        "includeAll": {{ template.includeAll }},
+        "label": "{{ template.label }}",
+        "multi": false,
+        "name": "{{ template.name }}",
+        "options": [ ],
+        "query": "{{ template.query }}",
+        "refresh": 2,
+        "regex": "",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [ ],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+{% endfor %}
+    ]
   },
   "time": {
     "from": "now-6h",
