@@ -13,3 +13,4 @@ grafana_enable_internal_metrics: False
 grafana_auto_prometheus_config: False
 grafana_auto_dashboards_config: False
 grafana_prometheus_port: 9090
+grafana_dashboards_heatmaps: []
