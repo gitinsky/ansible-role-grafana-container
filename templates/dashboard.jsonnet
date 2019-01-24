@@ -29,7 +29,7 @@ dashboard.new(
 .addPanel(
   graphPanel.new(
     '{{ panel.name }}',
-    span=6,
+    span={{ panel.span }},
     format='{{ panel.format }}',
     fill={{ panel.fill }},
     min=0,
@@ -49,7 +49,9 @@ dashboard.new(
     prometheus.target(
       '{{ target.expr }}',
       datasource='default',
-      legendFormat='{{ target.legend_format }}'
+      legendFormat='{{ target.legend_format }}',
+      format='{{ target.format }}',
+      intervalFactor='{{ target.interval_factor }}',
     )
   )
 {% endfor %}
