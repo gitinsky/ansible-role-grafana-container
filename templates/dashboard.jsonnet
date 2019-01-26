@@ -9,7 +9,11 @@ local template = grafana.template;
 dashboard.new(
   '{{ item.dashboard_name }}',
   schemaVersion=16,
-  tags=['{{ item.tag }}'],
+  tags=[
+{% for tag in item.tags %}
+    '{{ tag }}'
+{% endfor %}
+  ],
   time_from='now-3h',
   refresh='30s',
 )
