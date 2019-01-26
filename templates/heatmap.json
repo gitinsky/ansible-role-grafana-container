@@ -45,7 +45,7 @@
           "intervalFactor": 1,
           "legendFormat": "{{ target.legend_format }}",
           "refId": "A"
-        }
+        }{% if not loop.last %},{% endif %}
 {% endfor %}
       ],
       "title": "{{ panel.name }}",
@@ -71,7 +71,7 @@
       "yBucketBound": "auto",
       "yBucketNumber": null,
       "yBucketSize": null
-    }
+    }{% if not loop.last %},{% endif %}
 {% endfor %}
   ],
   "refresh": "30s",
@@ -79,7 +79,7 @@
   "style": "dark",
   "tags": [
 {% for tag in item.tags %}
-    "{{ tag }}"
+    "{{ tag }}"{% if not loop.last %},{% endif %}
 {% endfor %}
   ],
   "templating": {
@@ -104,7 +104,7 @@
         "tagsQuery": "",
         "type": "query",
         "useTags": false
-      }
+      }{% if not loop.last %},{% endif %}
 {% endfor %}
     ]
   },

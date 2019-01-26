@@ -11,7 +11,7 @@ dashboard.new(
   schemaVersion=16,
   tags=[
 {% for tag in item.tags %}
-    '{{ tag }}'
+    '{{ tag }}'{% if not loop.last %},{% endif %}
 {% endfor %}
   ],
   time_from='now-3h',
