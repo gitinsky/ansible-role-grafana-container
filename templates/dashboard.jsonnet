@@ -41,6 +41,7 @@ dashboard.new(
     stack={{ panel.stack }},
     decimals=2,
     aliasColors={{ panel.alias_colors }},
+    linewidth={{ panel.linewidth }},
     datasource='default',
     legend_values=true,
     legend_min=true,
