@@ -31,6 +31,7 @@ dashboard.new(
 {% endfor %}
 {% for panel in item.panels %}
 .addPanel(
+{% if panel.type == "graph" %}
   graphPanel.new(
     '{{ panel.name }}',
     span={{ panel.span }},
@@ -51,6 +52,14 @@ dashboard.new(
     legend_avg=true,
     legend_alignAsTable=true,
   )
+{% else %}
+  singlestat.new(
+    '{{ panel.name }}',
+    valueName='{{ panel.value_name }}',
+    colorValue={{ panel.color_value }},
+    datasource='default',
+  )
+{% endif %}
 {% for target in panel.targets %}
   .addTarget(
     prometheus.target(
