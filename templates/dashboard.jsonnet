@@ -39,7 +39,7 @@ dashboard.new(
     min={{ panel.min }},
     max={{ panel.max }},
     stack={{ panel.stack }},
-    decimals=2,
+    decimals={{ panel.decimals }},
     aliasColors={{ panel.alias_colors }},
     linewidth={{ panel.linewidth }},
     datasource='default',
