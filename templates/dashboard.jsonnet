@@ -14,8 +14,8 @@ dashboard.new(
     '{{ tag }}'{% if not loop.last %},{% endif %}
 {% endfor %}
   ],
-  time_from='now-3h',
-  refresh='30s',
+  time_from='{{ item.time_from }}',
+  refresh='{{ item.refresh }}',
 )
 {% for template in item.templates %}
 .addTemplate(
