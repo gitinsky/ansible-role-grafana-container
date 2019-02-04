@@ -4,6 +4,7 @@ ext_grafana_conf_volume: /var/lib/docker-extvols/grafana/conf
 ext_grafana_provisioning_volume: /var/lib/docker-extvols/grafana/provisioning
 ext_grafana_dashboards_volume: /var/lib/docker-extvols/grafana/dashboards
 grafana_port: 3000
+grafana_container_host_address: "0.0.0.0"
 grafana_anon_access_enabled: "false"
 grafana_auth_basic_enabled: "true"
 grafana_container_name: grafana

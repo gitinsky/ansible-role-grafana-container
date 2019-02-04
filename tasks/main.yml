@@ -60,7 +60,7 @@
     restart_policy: always
     hostname: "{{ ansible_hostname }}-{{ grafana_container_name }}"
     ports:
-      - "{{ grafana_port }}:3000"
+      - "{{ grafana_container_host_address }}:{{ grafana_port }}:3000"
     volumes:
       - "{{ ext_grafana_data_volume }}:/var/lib/grafana"
       - "{{ ext_grafana_conf_volume }}/grafana.ini:/etc/grafana/grafana.ini"
