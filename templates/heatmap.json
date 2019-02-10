@@ -109,7 +109,7 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "{{ item.time_from }}",
     "to": "now"
   },
   "timepicker": {
