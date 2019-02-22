@@ -68,6 +68,5 @@
       - "{{ ext_grafana_dashboards_volume }}:/var/lib/grafana/dashboards"
       - "{{ ext_grafana_tmp_volume }}:/var/tmp"
     name: "{{ grafana_container_name }}"
-    restart_policy: always
   tags:
     - docker
