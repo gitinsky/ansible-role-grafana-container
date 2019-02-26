@@ -30,7 +30,7 @@
   when: grafana_auto_dashboards_config
 
 - name: checkout grafonnet
-  git: repo=https://github.com/grafana/grafonnet-lib.git dest=/root/dashboards/grafonnet-lib
+  git: repo=https://github.com/grafana/grafonnet-lib.git dest=/root/dashboards/grafonnet-lib version=master
   when: grafana_auto_dashboards_config
 
 - name: put grafonnet dashboards
@@ -42,7 +42,8 @@
   file: state=directory path={{ ext_grafana_dashboards_volume }}
 
 - name: generate the dashboard
-  shell: cd /root/dashboards && docker run --rm -i -v `pwd`:/src mexisme/jsonnet /jsonnet -J /src/grafonnet-lib /src/{{ item.file_name }}.jsonnet > {{ ext_grafana_dashboards_volume }}/{{ item.file_name }}.json
+  shell: "cd /root/dashboards && docker run --rm -i -v `pwd`:/src mexisme/jsonnet /jsonnet -J /src/grafonnet-lib
+           /src/{{ item.file_name }}.jsonnet > {{ ext_grafana_dashboards_volume }}/{{ item.file_name }}.json"
   when: grafana_auto_dashboards_config
   with_items: "{{ grafana_dashboards_grafonnet }}"
 
