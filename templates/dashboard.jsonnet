@@ -71,6 +71,18 @@ dashboard.new(
     )
   )
 {% endfor %}
+{% if panel.series_overrides is defined %}
+{% for override_alias, overrides_hash in panel.series_overrides.iteritems() %}
+  .addSeriesOverride(
+    {
+      "alias": "{{ override_alias }}",
+{% for override_param, override_val in overrides_hash.iteritems() %}
+      "{{ override_param }}": {{ override_val }},
+{% endfor %}
+    }
+  )
+{% endfor %}
+{% endif %}
   , gridPos={
     x: {{ panel.gridpos_x }},
     y: {{ panel.gridpos_y }},
