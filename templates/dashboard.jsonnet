@@ -39,7 +39,7 @@ dashboard.new(
     fill={{ panel.fill }},
     min={{ panel.min }},
     max={{ panel.max }},
-    stack={{ panel.stack }},
+    stack={% if panel.stack is defined %}{{ panel.stack }}{% else %}false{% endif %},
     decimals={{ panel.decimals }},
     aliasColors={{ panel.alias_colors }},
     linewidth={% if panel.linewidth is defined %}{{ panel.linewidth }}{% else %}1{% endif %},
