@@ -66,7 +66,7 @@ dashboard.new(
       '{{ target.expr }}',
       datasource='default',
       legendFormat='{{ target.legend_format }}',
-      format='{{ target.format }}',
+      format='{% if target.format is defined %}{{ target.format }}{% else %}time_series{% endif %}',
       intervalFactor='{{ target.interval_factor }}',
     )
   )
