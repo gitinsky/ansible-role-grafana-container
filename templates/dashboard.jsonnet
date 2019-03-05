@@ -42,7 +42,7 @@ dashboard.new(
     stack={{ panel.stack }},
     decimals={{ panel.decimals }},
     aliasColors={{ panel.alias_colors }},
-    linewidth={{ panel.linewidth }},
+    linewidth={% if panel.linewidth is defined %}{{ panel.linewidth }}{% else %}1{% endif %},
     datasource='default',
     legend_values=true,
     legend_min=true,
