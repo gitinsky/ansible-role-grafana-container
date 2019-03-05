@@ -15,7 +15,7 @@ dashboard.new(
 {% endfor %}
   ],
   time_from='{{ item.time_from }}',
-  refresh='{{ item.refresh }}',
+  refresh='{% if item.refresh is defined %}{{ item.refresh }}{% else %}30s{% endif %}',
 )
 {% for template in item.templates %}
 .addTemplate(
