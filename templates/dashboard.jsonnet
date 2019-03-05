@@ -31,7 +31,7 @@ dashboard.new(
 {% endfor %}
 {% for panel in item.panels %}
 .addPanel(
-{% if panel.type == "graph" %}
+{% if panel.type is not defined or panel.type == "graph" %}
   graphPanel.new(
     '{{ panel.name }}',
     span={{ panel.span }},
