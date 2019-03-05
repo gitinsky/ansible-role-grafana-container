@@ -41,7 +41,7 @@ dashboard.new(
     max={% if panel.max is defined %}{{ panel.max }}{% else %}null{% endif %},
     stack={% if panel.stack is defined %}{{ panel.stack }}{% else %}false{% endif %},
     decimals={{ panel.decimals }},
-    aliasColors={{ panel.alias_colors }},
+    aliasColors={% if panel.alias_colors is defined %}{{ panel.alias_colors }}{% else %}{}{% endif %},
     linewidth={% if panel.linewidth is defined %}{{ panel.linewidth }}{% else %}1{% endif %},
     datasource='default',
     legend_values=true,
