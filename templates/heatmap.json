@@ -12,6 +12,7 @@
   "panels": [
 {% for panel in item.panels %}
     {
+{% if (panel.type is not defined) or (panel.type == "heatmap") %}
       "cards": {
         "cardPadding": null,
         "cardRound": null
@@ -24,15 +25,22 @@
         "mode": "opacity"
       },
       "dataFormat": "tsbuckets",
+{% endif %}
+{% if panel.value_name is defined %}
+      "valueName": "{{ panel.value_name }}",
+{% endif %}
+{% if panel.color_value is defined %}
+      "colorValue": {{ panel.color_value }},
+{% endif %}
       "gridPos": {
-        "h": 14,
-        "w": 24,
-        "x": 0,
-        "y": 0
+        "h": {% if panel.gridpos_h is defined %}{{ panel.gridpos_h }}{% else %}14{% endif %},
+        "w": {% if panel.gridpos_w is defined %}{{ panel.gridpos_w }}{% else %}24{% endif %},
+        "x": {% if panel.gridpos_x is defined %}{{ panel.gridpos_x }}{% else %}0{% endif %},
+        "y": {% if panel.gridpos_y is defined %}{{ panel.gridpos_y }}{% else %}0{% endif %}
       },
       "heatmap": {},
       "highlightCards": true,
-      "id": 2,
+      "id": {{ 1 + loop.index }},
       "legend": {
         "show": false
       },
@@ -41,8 +49,8 @@
 {% for target in panel.targets %}
         {
           "expr": "{{ target.expr }}",
-          "format": "heatmap",
-          "intervalFactor": 1,
+          "format": "{% if target.format is defined %}{{ target.format }}{% else %}heatmap{% endif %}",
+          "intervalFactor": {% if target.interval_factor is defined %}{{ target.interval_factor }}{% else %}1{% endif %},
           "legendFormat": "{{ target.legend_format }}",
           "refId": "A"
         }{% if not loop.last %},{% endif %}
@@ -53,12 +61,13 @@
         "show": true,
         "showHistogram": false
       },
-      "type": "heatmap",
+      "type": "{% if panel.type is defined %}{{ panel.type }}{% else %}heatmap{% endif %}",
       "xAxis": {
         "show": true
       },
       "xBucketNumber": null,
       "xBucketSize": null,
+{% if (panel.type is not defined) or (panel.type != "singlestat") %}
       "yAxis": {
         "decimals": {{ panel.decimals }},
         "format": "{{ panel.format }}",
@@ -68,13 +77,14 @@
         "show": true,
         "splitFactor": null
       },
+{% endif %}
       "yBucketBound": "auto",
       "yBucketNumber": null,
       "yBucketSize": null
     }{% if not loop.last %},{% endif %}
 {% endfor %}
   ],
-  "refresh": "30s",
+  "refresh": "{% if item.refresh is defined %}{{ item.refresh }}{% else %}30s{% endif %}",
   "schemaVersion": 16,
   "style": "dark",
   "tags": [
