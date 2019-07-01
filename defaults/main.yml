@@ -16,3 +16,11 @@ grafana_auto_dashboards_config: False
 grafana_prometheus_port: 9090
 grafana_dashboards_heatmaps: []
 grafana_dashboards_grafonnet: []
+grafana_datasources:
+- name: Prometheus
+  type: prometheus
+  access: proxy
+  org_id: 1
+  editable: "false"
+  is_default: "true"
+  url: "http://{{ grafana_prometheus_address }}:{{ grafana_prometheus_port }}"

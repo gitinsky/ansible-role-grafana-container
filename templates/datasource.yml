@@ -9,16 +9,17 @@ deleteDatasources:
 # list of datasources to insert/update depending
 # whats available in the database
 datasources:
+{% for datasource in grafana_datasources %}
   # <string, required> name of the datasource. Required
-- name: Prometheus
+- name: {{ datasource.name }}
   # <string, required> datasource type. Required
-  type: prometheus
+  type: {{ datasource.type }}
   # <string, required> access mode. direct or proxy. Required
-  access: proxy
+  access: {{ datasource.access }}
   # <int> org id. will default to orgId 1 if not specified
-  orgId: 1
+  orgId: {{ datasource.org_id }}
   # <string> url
-  url: http://{{ grafana_prometheus_address }}:{{ grafana_prometheus_port }}
+  url: {{ datasource.url }}
   # <string> database password, if used
   password:
   # <string> database user, if used
@@ -34,11 +35,12 @@ datasources:
   # <bool> enable/disable with credentials headers
   withCredentials:
   # <bool> mark as default datasource. Max one per org
-  isDefault: true
+  isDefault: {{ datasource.is_default }}
   # <map> fields that will be converted to json and stored in json_data
   jsonData:
   # <string> json object of data that will be encrypted.
   secureJsonData:
   version: 1
   # <bool> allow users to edit datasources from the UI.
-  editable: false
+  editable: {{ datasource.editable }}
+{% endfor %}
