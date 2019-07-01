@@ -21,11 +21,11 @@ datasources:
   # <string> url
   url: {{ datasource.url }}
   # <string> database password, if used
-  password:
+  password: {% if datasource.password is defined %}{{ datasource.password }}{% endif %}
   # <string> database user, if used
-  user:
+  user: {% if datasource.user is defined %}{{ datasource.user }}{% endif %}
   # <string> database name, if used
-  database:
+  database: {% if datasource.database is defined %}{{ datasource.database }}{% endif %}
   # <bool> enable/disable basic auth
   basicAuth: false
   # <string> basic auth username
