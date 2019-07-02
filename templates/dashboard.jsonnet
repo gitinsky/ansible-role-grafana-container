@@ -59,6 +59,9 @@ dashboard.new(
     '{{ panel.name }}',
     valueName='{{ panel.value_name }}',
     colorValue={{ panel.color_value }},
+    gaugeShow={% if panel.gauge_show is defined %}{{ panel.gauge_show }}{% else %}false{% endif %},
+    gaugeMinValue={% if panel.gauge_min_value is defined %}{{ panel.gauge_min_value }}{% else %}0{% endif %},
+    gaugeMaxValue={% if panel.gauge_max_value is defined %}{{ panel.gauge_max_value }}{% else %}100{% endif %},
     datasource='default',
   )
 {% endif %}
