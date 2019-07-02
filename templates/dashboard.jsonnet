@@ -17,6 +17,7 @@ dashboard.new(
   time_from='{{ item.time_from }}',
   refresh='{% if item.refresh is defined %}{{ item.refresh }}{% else %}30s{% endif %}',
 )
+{% if item.templates is defined %}
 {% for template in item.templates %}
 .addTemplate(
   template.new(
@@ -29,6 +30,7 @@ dashboard.new(
   )
 )
 {% endfor %}
+{% endif %}
 {% for panel in item.panels %}
 .addPanel(
 {% if panel.type is not defined or panel.type == "graph" %}
