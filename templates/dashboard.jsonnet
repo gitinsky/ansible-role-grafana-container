@@ -46,13 +46,14 @@ dashboard.new(
     aliasColors={% if panel.alias_colors is defined %}{{ '{ ' }}{% for alias, color in panel.alias_colors.iteritems() %}"{{ alias }}": "{{ color }}", {% endfor %}{{ ' }' }}{% else %}{}{% endif %},
     linewidth={% if panel.linewidth is defined %}{{ panel.linewidth }}{% else %}1{% endif %},
     datasource='default',
-    legend_values=true,
-    legend_min=true,
-    legend_max=true,
+    legend_show={% if panel.legend_show is defined %}{{ panel.legend_show }}{% else %}true{% endif %},
+    legend_values={% if panel.legend_values is defined %}{{ panel.legend_values }}{% else %}true{% endif %},
+    legend_min={% if panel.legend_min is defined %}{{ panel.legend_min }}{% else %}true{% endif %},
+    legend_max={% if panel.legend_max is defined %}{{ panel.legend_max }}{% else %}true{% endif %},
     legend_current=true,
     legend_total=false,
-    legend_avg=true,
-    legend_alignAsTable=true,
+    legend_avg={% if panel.legend_avg is defined %}{{ panel.legend_avg }}{% else %}true{% endif %},
+    legend_alignAsTable={% if panel.legend_table is defined %}{{ panel.legend_table }}{% else %}true{% endif %},
   )
 {% else %}
   singlestat.new(
