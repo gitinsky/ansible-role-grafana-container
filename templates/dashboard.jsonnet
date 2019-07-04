@@ -20,6 +20,7 @@ dashboard.new(
 {% if item.templates is defined %}
 {% for template in item.templates %}
 .addTemplate(
+{% if template.type is not defined or template.type == "query" %}
   template.new(
     '{{ template.name }}',
     'default',
@@ -28,6 +29,15 @@ dashboard.new(
     refresh='time',
     includeAll={{ template.includeAll }},
   )
+{% elif template.type == "custom" %}
+  template.custom(
+    '{{ template.name }}',
+    '{{ template.query }}',
+    '{{ template.current }}',
+    label='{{ template.label }}',
+  )
+{% else %}
+{% endif %}
 )
 {% endfor %}
 {% endif %}
