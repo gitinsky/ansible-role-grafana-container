@@ -5,6 +5,7 @@ local graphPanel = grafana.graphPanel;
 local tablePanel = grafana.tablePanel;
 local singlestat = grafana.singlestat;
 local prometheus = grafana.prometheus;
+local sql = grafana.sql;
 local template = grafana.template;
 
 dashboard.new(
@@ -85,6 +86,7 @@ dashboard.new(
 {% endif %}
 {% for target in panel.targets %}
   .addTarget(
+{% if target.raw_sql is not defined %}
     prometheus.target(
       '{{ target.expr }}',
       datasource='default',
@@ -92,6 +94,13 @@ dashboard.new(
       format='{% if target.format is defined %}{{ target.format }}{% else %}time_series{% endif %}',
       intervalFactor='{% if target.interval_factor is defined %}{{ target.interval_factor }}{% else %}2{% endif %}',
     )
+{% else %}
+    sql.target(
+      '{{ target.raw_sql }}',
+      datasource='default',
+      format='{% if target.format is defined %}{{ target.format }}{% else %}time_series{% endif %}',
+    )
+{% endif %}
   )
 {% endfor %}
 {% if panel.series_overrides is defined %}
