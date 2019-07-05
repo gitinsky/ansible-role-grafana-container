@@ -96,7 +96,7 @@ dashboard.new(
     )
 {% else %}
     sql.target(
-      '{{ target.raw_sql }}',
+      "{{ target.raw_sql }}",
       datasource='default',
       format='{% if target.format is defined %}{{ target.format }}{% else %}time_series{% endif %}',
     )
