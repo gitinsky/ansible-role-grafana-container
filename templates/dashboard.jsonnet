@@ -65,7 +65,7 @@ dashboard.new(
     legend_avg={% if panel.legend_avg is defined %}{{ panel.legend_avg }}{% else %}true{% endif %},
     legend_alignAsTable={% if panel.legend_table is defined %}{{ panel.legend_table }}{% else %}true{% endif %},
   )
-{% else %}
+{% elif panel.type == "singlestat" %}
   singlestat.new(
     '{{ panel.name }}',
     valueName='{{ panel.value_name }}',
@@ -75,6 +75,12 @@ dashboard.new(
     gaugeMaxValue={% if panel.gauge_max_value is defined %}{{ panel.gauge_max_value }}{% else %}100{% endif %},
     datasource='default',
   )
+{% elif panel.type == "table" %}
+  tablePanel.new(
+    '{{ panel.name }}',
+    datasource='default',
+  )
+{% else %}
 {% endif %}
 {% for target in panel.targets %}
   .addTarget(
