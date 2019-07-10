@@ -85,4 +85,6 @@
     method: PUT
     body_format: json
     body: '{"homeDashboardId": {{dashboard.json.dashboard.id}} }'
+    headers:
+      Authorization: "{{ grafana_admin_user }}:{{ grafana_admin_password }}"
   when: "grafana_default_dashboard_slug is defined"
