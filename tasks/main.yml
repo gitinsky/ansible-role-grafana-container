@@ -86,5 +86,5 @@
     url: http://{{ grafana_container_host_address }}:{{ grafana_port }}/api/user/preferences
     method: PUT
     body_format: json
-    body: '{"homeDashboardId": {{dashboard.json.dashboard.id}} }'
+    body: '{"homeDashboardId": {{ dashboard.json.dashboard.id }} }'
   when: "grafana_default_dashboard_slug is defined"
