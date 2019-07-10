@@ -71,3 +71,18 @@
     name: "{{ grafana_container_name }}"
   tags:
     - docker
+
+- uri:
+    url: http://{{ grafana_container_host_address }}:{{ grafana_port }}/api/dashboards/db/{{ grafana_default_dashboard_slug }}
+    return_content: yes
+  register: dashboard
+  retries: 10
+  delay: 10
+  when: "grafana_default_dashboard_slug is defined"
+
+- uri:
+    url: http://{{ grafana_container_host_address }}:{{ grafana_port }}/api/org/preferences
+    method: PUT
+    body_format: json
+    body: '{"homeDashboardId": {{dashboard.json.dashboard.id}} }'
+  when: "grafana_default_dashboard_slug is defined"
