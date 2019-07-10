@@ -72,7 +72,8 @@
   tags:
     - docker
 
-- uri:
+- name: get the dashboard ID
+  uri:
     url: http://{{ grafana_container_host_address }}:{{ grafana_port }}/api/dashboards/db/{{ grafana_default_dashboard_slug }}
     return_content: yes
   register: dashboard
@@ -80,11 +81,10 @@
   delay: 10
   when: "grafana_default_dashboard_slug is defined"
 
-- uri:
-    url: http://{{ grafana_container_host_address }}:{{ grafana_port }}/api/org/preferences
+- name: set the default dashboard ID
+  uri:
+    url: http://{{ grafana_container_host_address }}:{{ grafana_port }}/api/user/preferences
     method: PUT
     body_format: json
     body: '{"homeDashboardId": {{dashboard.json.dashboard.id}} }'
-    user: "{{ grafana_admin_user }}"
-    password: "{{ grafana_admin_password }}"
   when: "grafana_default_dashboard_slug is defined"
