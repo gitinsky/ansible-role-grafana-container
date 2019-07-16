@@ -71,6 +71,9 @@ dashboard.new(
   singlestat.new(
     '{{ panel.name }}',
     valueName='{{ panel.value_name }}',
+    valueFontSize={% if panel.value_font_size is defined %}{{ panel.value_font_size }}{% else %}'80%'{% endif %},
+    decimals={% if panel.decimals is defined %}{{ panel.decimals }}{% else %}null{% endif %},
+    thresholds={% if panel.thresholds is defined %}{{ panel.thresholds }}{% else %}''{% endif %},
     colorValue={{ panel.color_value }},
     gaugeShow={% if panel.gauge_show is defined %}{{ panel.gauge_show }}{% else %}false{% endif %},
     gaugeMinValue={% if panel.gauge_min_value is defined %}{{ panel.gauge_min_value }}{% else %}0{% endif %},
