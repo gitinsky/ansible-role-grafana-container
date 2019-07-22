@@ -3,6 +3,7 @@ local dashboard = grafana.dashboard;
 local row = grafana.row;
 local graphPanel = grafana.graphPanel;
 local tablePanel = grafana.tablePanel;
+local heatmapPanel = grafana.heatmapPanel;
 local singlestat = grafana.singlestat;
 local prometheus = grafana.prometheus;
 local sql = grafana.sql;
@@ -84,6 +85,18 @@ dashboard.new(
   tablePanel.new(
     '{{ panel.name }}',
     datasource='default',
+  )
+{% elif panel.type == "heatmap" %}
+  heatmapPanel.new(
+    '{{ panel.name }}',
+    datasource='default',
+    color_cardColor='{{ panel.card_color }}',
+    color_colorScheme='interpolateSpectral',
+    color_exponent=0.3,
+    color_mode='opacity',
+    dataFormat='tsbuckets',
+    yAxis_decimals={{ panel.decimals }},
+    yAxis_format='{{ panel.format }}',
   )
 {% else %}
 {% endif %}
