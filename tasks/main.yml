@@ -77,8 +77,8 @@
     url: http://{{ grafana_container_host_address }}:{{ grafana_port }}/api/dashboards/db/{{ grafana_default_dashboard_slug }}
     return_content: yes
   register: dashboard
-  retries: 10
-  delay: 10
+  retries: 20
+  delay: 1
   until: dashboard is not failed
   when: "grafana_default_dashboard_slug is defined"
 
