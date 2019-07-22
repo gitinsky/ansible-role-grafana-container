@@ -79,6 +79,7 @@
   register: dashboard
   retries: 10
   delay: 10
+  until: result is not failed
   when: "grafana_default_dashboard_slug is defined"
 
 - name: set the default dashboard ID
