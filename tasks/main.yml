@@ -52,6 +52,21 @@
   when: grafana_auto_dashboards_config
   with_items: "{{ grafana_dashboards_heatmaps }}"
 
+- name: create plugins folder
+  file: state=directory path={{ ext_grafana_plugins_volume }}
+
+- name: download the Status Dot Panel plugin
+  get_url: url=https://grafana.com/api/plugins/btplc-status-dot-panel/versions/0.2.4/download dest=/root/BT-OpenSource-bt-grafana-status-dot-f19fba7.zip
+
+- name: unpack the Status Dot Panel plugin
+  unarchive: remote_src=yes src=/root/BT-OpenSource-bt-grafana-status-dot-f19fba7.zip dest={{ ext_grafana_plugins_volume }}
+
+- name: download the Flant plugin
+  get_url: url=https://github.com/flant/grafana-statusmap/archive/master.zip dest=/root/flant-grafana-statusmap.zip
+
+- name: unpack the Grafana Statusmap plugin
+  unarchive: remote_src=yes src=/root/flant-grafana-statusmap.zip dest={{ ext_grafana_plugins_volume }}
+
 - name: start a grafana container
   docker_container:
     image: grafana/grafana
@@ -67,6 +82,7 @@
       - "{{ ext_grafana_conf_volume }}/grafana.ini:/etc/grafana/grafana.ini"
       - "{{ ext_grafana_provisioning_volume }}:/etc/grafana/provisioning"
       - "{{ ext_grafana_dashboards_volume }}:/var/lib/grafana/dashboards"
+      - "{{ ext_grafana_plugins_volume }}:/var/lib/grafana/plugins"
       - "{{ ext_grafana_tmp_volume }}:/var/tmp"
     name: "{{ grafana_container_name }}"
   tags:
