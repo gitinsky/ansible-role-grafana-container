@@ -55,6 +55,9 @@
 - name: create plugins folder
   file: state=directory path={{ ext_grafana_plugins_volume }}
 
+- name: setup unzip
+  apt: name=unzip
+
 - name: download the Status Dot Panel plugin
   get_url: url=https://grafana.com/api/plugins/btplc-status-dot-panel/versions/0.2.4/download dest=/root/BT-OpenSource-bt-grafana-status-dot-f19fba7.zip
 
@@ -63,9 +66,6 @@
 
 - name: download the Flant plugin
   get_url: url=https://github.com/flant/grafana-statusmap/archive/master.zip dest=/root/flant-grafana-statusmap.zip
-
-- name: setup unzip
-  apt: name=unzip
 
 - name: unpack the Grafana Statusmap plugin
   unarchive: remote_src=yes src=/root/flant-grafana-statusmap.zip dest={{ ext_grafana_plugins_volume }}
