@@ -64,6 +64,9 @@
 - name: download the Flant plugin
   get_url: url=https://github.com/flant/grafana-statusmap/archive/master.zip dest=/root/flant-grafana-statusmap.zip
 
+- name: setup unzip
+  apt: name=unzip
+
 - name: unpack the Grafana Statusmap plugin
   unarchive: remote_src=yes src=/root/flant-grafana-statusmap.zip dest={{ ext_grafana_plugins_volume }}
 
