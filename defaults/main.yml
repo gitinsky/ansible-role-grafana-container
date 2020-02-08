@@ -17,6 +17,7 @@ grafana_auto_dashboards_config: False
 grafana_prometheus_port: 9090
 grafana_dashboards_heatmaps: []
 grafana_dashboards_grafonnet: []
+grafana_dashboards_grafonnet_list: []
 grafana_datasources:
 - name: Prometheus
   type: prometheus

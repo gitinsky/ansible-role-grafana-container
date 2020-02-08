@@ -33,10 +33,15 @@
   git: repo=https://github.com/grafana/grafonnet-lib.git dest=/root/dashboards/grafonnet-lib version=master
   when: grafana_auto_dashboards_config
 
+- name: combine all dashboards to a single list
+  set_fact:
+    grafana_dashboards_grafonnet_list: "{{ grafana_dashboards_grafonnet_list + [ vars[item] ] }}"
+  with_items: "{{ grafana_dashboards_grafonnet }}"
+
 - name: put grafonnet dashboards
   template: src=dashboard.jsonnet dest=/root/dashboards/{{ item.file_name }}.jsonnet
   when: grafana_auto_dashboards_config
-  with_items: "{{ grafana_dashboards_grafonnet }}"
+  with_items: "{{ grafana_dashboards_grafonnet_list }}"
 
 - name: create dashboards folder
   file: state=directory path={{ ext_grafana_dashboards_volume }}
@@ -45,7 +50,7 @@
   shell: "cd /root/dashboards && docker run --rm -i -v `pwd`:/src mexisme/jsonnet /jsonnet -J /src/grafonnet-lib
            /src/{{ item.file_name }}.jsonnet > {{ ext_grafana_dashboards_volume }}/{{ item.file_name }}.json"
   when: grafana_auto_dashboards_config
-  with_items: "{{ grafana_dashboards_grafonnet }}"
+  with_items: "{{ grafana_dashboards_grafonnet_list }}"
 
 - name: create plugins folder
   file: state=directory path={{ ext_grafana_plugins_volume }}
