@@ -104,7 +104,7 @@
   retries: 20
   delay: 1
   until: dashboard is not failed
-  when: "grafana_default_dashboard_slug is defined"
+  when: "grafana_default_dashboard_slug is defined and grafana_anon_access_enabled"
 
 - name: set the default dashboard ID
   uri:
@@ -112,4 +112,4 @@
     method: PUT
     body_format: json
     body: '{"homeDashboardId": {{ dashboard.json.dashboard.id }} }'
-  when: "grafana_default_dashboard_slug is defined"
+  when: "grafana_default_dashboard_slug is defined and grafana_anon_access_enabled"
