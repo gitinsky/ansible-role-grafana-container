@@ -47,11 +47,6 @@
   when: grafana_auto_dashboards_config
   with_items: "{{ grafana_dashboards_grafonnet }}"
 
-- name: put heatmaps
-  template: src=heatmap.json dest={{ ext_grafana_dashboards_volume }}/{{ item.file_name }}.json
-  when: grafana_auto_dashboards_config
-  with_items: "{{ grafana_dashboards_heatmaps }}"
-
 - name: create plugins folder
   file: state=directory path={{ ext_grafana_plugins_volume }}
 
