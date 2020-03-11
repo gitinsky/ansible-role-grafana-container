@@ -75,6 +75,12 @@
 - name: unpack the Grafana Statusmap plugin
   unarchive: remote_src=yes src=/root/flant-grafana-statusmap.zip dest={{ ext_grafana_plugins_volume }}
 
+- name: download the Raintank worldPing plugin
+  get_url: url=https://grafana.com/api/plugins/raintank-worldping-app/versions/1.2.6/download dest=/root/raintank-worldping-app-v1.2.6-0-gb88a0d6.zip
+
+- name: unpack the Raintank worldPing plugin
+  unarchive: remote_src=yes src=/root/raintank-worldping-app-v1.2.6-0-gb88a0d6.zip dest={{ ext_grafana_plugins_volume }}
+
 - name: start a grafana container
   docker_container:
     image: grafana/grafana
